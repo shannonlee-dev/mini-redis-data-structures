@@ -1,0 +1,33 @@
+[project]
+name = "mini-redis-data-structures"
+version = "0.1.0"
+description = "자료구조 기반 메모리 저장소"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+
+[dependency-groups]
+dev = ["pytest>=8,<9", "ruff"]
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mini_redis"]
+
+[project.scripts]
+mini-redis = "mini_redis.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib --strict-markers"
+markers = ["smoke: 외부 서비스·실제 데이터 변경 없이 주요 실행 경로 검증"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

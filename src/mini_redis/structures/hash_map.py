@@ -4,7 +4,6 @@ from typing import Generic, List, Optional, Tuple, TypeVar, Union, overload
 
 from .linked_list import DoublyLinkedList, LinkedListNode
 
-
 K = TypeVar("K")
 V = TypeVar("V")
 D = TypeVar("D")
@@ -37,12 +36,10 @@ class HashMap(Generic[K, V]):
         return self._put_no_resize(key, value)
 
     @overload
-    def get(self, key: K) -> Optional[V]:
-        ...
+    def get(self, key: K) -> Optional[V]: ...
 
     @overload
-    def get(self, key: K, default: D) -> Union[V, D]:
-        ...
+    def get(self, key: K, default: D) -> Union[V, D]: ...
 
     def get(self, key: K, default: object = None) -> object:
         node = self._find_node(key)

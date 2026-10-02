@@ -3,9 +3,9 @@ from __future__ import annotations
 import time
 from typing import Callable, List, Optional
 
-from .hash_map import HashMap
-from .linked_list import DoublyLinkedList, LinkedListNode
-from .min_heap import HeapItem, MinHeap
+from .structures.hash_map import HashMap
+from .structures.linked_list import DoublyLinkedList, LinkedListNode
+from .structures.min_heap import HeapItem, MinHeap
 
 
 class StoreEntry:
@@ -170,7 +170,11 @@ class MiniRedisStore:
                 break
             self._expire_heap.pop()
             current_expire = self._expires.get(item.key)
-            if current_expire is not None and current_expire <= now and current_expire == item.expire_at:
+            if (
+                current_expire is not None
+                and current_expire <= now
+                and current_expire == item.expire_at
+            ):
                 self._delete_key(item.key)
 
     def _is_expired(self, key: str) -> bool:

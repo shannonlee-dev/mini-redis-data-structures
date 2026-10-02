@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Generic, List, Optional, TypeVar, cast
 
-
 T = TypeVar("T")
 
 
@@ -13,7 +12,7 @@ class DynamicArray(Generic[T]):
         self._capacity = max(1, initial_capacity)
         self._size = 0
         self._items: List[Optional[T]] = [None] * self._capacity
-        
+
     def __len__(self) -> int:
         return self._size
 

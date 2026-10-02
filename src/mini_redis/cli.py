@@ -6,7 +6,6 @@ from typing import Callable, List, Optional, TextIO, Union
 
 from .store import MiniRedisStore
 
-
 CommandResult = Union[str, List[str]]
 
 
@@ -122,7 +121,11 @@ class MiniRedisCLI:
         return lines
 
     def _config(self, parts: List[str]) -> str:
-        if len(parts) != 4 or parts[1].upper() != "SET" or parts[2].lower() != "maxmemory":
+        if (
+            len(parts) != 4
+            or parts[1].upper() != "SET"
+            or parts[2].lower() != "maxmemory"
+        ):
             return "(error) ERR wrong number of arguments for 'CONFIG' command"
         return self.store.config_set_maxmemory(parts[3])
 
@@ -143,3 +146,8 @@ class MiniRedisCLI:
     def _subscribe(self, parts: List[str]) -> str:
         count = self.store.subscribe(parts[1])
         return 'subscribed to "%s" (%d)' % (parts[1], count)
+
+
+def main() -> None:
+    """기존 REPL을 실행한다."""
+    MiniRedisCLI().run()
