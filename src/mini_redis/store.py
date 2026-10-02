@@ -94,6 +94,7 @@ class MiniRedisStore:
         value = self._parse_non_negative_integer(value_text)
         if value is None:
             return "(error) ERR value is not an integer or out of range"
+        self._delete_expired()
         self._maxmemory = value
         self._evict_if_needed()
         return "OK"
