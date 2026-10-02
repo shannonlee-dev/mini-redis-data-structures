@@ -26,3 +26,19 @@ def test_redis_repl_commands():
     )
     assert '"redis"' in result.stdout and "(nil)" in result.stdout
     assert "(integer) 1" in result.stdout and "(error)" not in result.stdout
+
+
+def test_pubsub_and_memory_commands_in_repl():
+    result = subprocess.run(
+        [sys.executable, "-m", "mini_redis"],
+        input="CONFIG SET maxmemory 4\nSET a 1\nINFO memory\nSUBSCRIBE news\n"
+        'PUBLISH news "hello world"\nQUIT\n',
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=30,
+    )
+    assert "used_memory:2" in result.stdout and "maxmemory:4" in result.stdout
+    assert 'subscribed to "news" (1)' in result.stdout
+    assert "(integer) 1" in result.stdout and "(error)" not in result.stdout
